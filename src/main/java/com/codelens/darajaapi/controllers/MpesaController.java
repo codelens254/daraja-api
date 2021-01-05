@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("sample")
-public class SampleController {
+@RequestMapping("mpesa")
+public class MpesaController {
 
     private final DarajaApi darajaApi;
 
-    public SampleController(DarajaApi darajaApi) {
+    public MpesaController(DarajaApi darajaApi) {
         this.darajaApi = darajaApi;
     }
 
     @GetMapping(path = "/token", produces = "application/json")
-    public ResponseEntity<AccessTokenResponse> getSampleMessage() {
+    public ResponseEntity<AccessTokenResponse> getAccessToken() {
         AccessTokenResponse accessTokenResponse = darajaApi.getAccessToken();
         return ResponseEntity.ok(accessTokenResponse);
     }
