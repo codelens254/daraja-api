@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SampleController {
 
     @GetMapping(produces = "application/json")
-    public String getSampleMessage() {
+    public String getSampleMessage(){
         return "Sample Controller Working";
     }
 }
