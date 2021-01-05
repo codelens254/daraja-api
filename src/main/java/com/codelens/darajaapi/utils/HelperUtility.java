@@ -3,7 +3,6 @@ package com.codelens.darajaapi.utils;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.internal.Base64;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
