@@ -5,6 +5,9 @@ import org.bson.internal.Base64;
 
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Contains a set of helper functions.
+ */
 @Slf4j
 public class HelperUtility {
 
