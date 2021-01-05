@@ -19,7 +19,6 @@ public class SampleController {
 
     @GetMapping(path = "/token", produces = "application/json")
     public ResponseEntity<AccessTokenResponse> getSampleMessage() {
-
         AccessTokenResponse accessTokenResponse = darajaApi.getAccessToken();
         return ResponseEntity.ok(accessTokenResponse);
     }
