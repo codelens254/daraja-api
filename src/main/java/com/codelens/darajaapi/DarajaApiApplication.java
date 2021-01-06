@@ -1,5 +1,6 @@
 package com.codelens.darajaapi;
 
+import com.codelens.darajaapi.dtos.AcknowledgeResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
 import org.springframework.boot.SpringApplication;
@@ -21,6 +22,13 @@ public class DarajaApiApplication {
     @Bean
     public ObjectMapper getObjectMapper() {
         return new ObjectMapper();
+    }
+
+    @Bean
+    public AcknowledgeResponse getAcknowledgeResponse() {
+        AcknowledgeResponse acknowledgeResponse = new AcknowledgeResponse();
+        acknowledgeResponse.setMessage("Success");
+        return acknowledgeResponse;
     }
 
 }

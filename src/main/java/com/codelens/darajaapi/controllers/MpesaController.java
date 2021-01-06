@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.*;
 public class MpesaController {
 
     private final DarajaApi darajaApi;
+    private final AcknowledgeResponse acknowledgeResponse;
 
-    public MpesaController(DarajaApi darajaApi) {
+    public MpesaController(DarajaApi darajaApi, AcknowledgeResponse acknowledgeResponse) {
         this.darajaApi = darajaApi;
+        this.acknowledgeResponse = acknowledgeResponse;
     }
 
     @GetMapping(path = "/token", produces = "application/json")
@@ -26,8 +28,8 @@ public class MpesaController {
     }
 
     @PostMapping(path = "/validation", produces = "application/json")
-    public ResponseEntity<MpesaValidationResponse> mpesaValidation(@RequestBody MpesaValidationResponse mpesaValidationResponse) {
-        return ResponseEntity.ok(mpesaValidationResponse);
+    public ResponseEntity<AcknowledgeResponse> mpesaValidation(@RequestBody MpesaValidationResponse mpesaValidationResponse) {
+        return ResponseEntity.ok(acknowledgeResponse);
     }
 
     @PostMapping(path = "/simulate-c2b", produces = "application/json")
