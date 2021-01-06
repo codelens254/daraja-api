@@ -5,7 +5,7 @@ import com.codelens.darajaapi.dtos.AccessTokenResponse;
 public interface DarajaApi {
 
     /**
-     * @return
+     * @return Returns Daraja API Access Token Response
      */
     AccessTokenResponse getAccessToken();
 }

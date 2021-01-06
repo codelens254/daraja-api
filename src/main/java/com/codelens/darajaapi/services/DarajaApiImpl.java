@@ -28,6 +28,9 @@ public class DarajaApiImpl implements DarajaApi {
         this.objectMapper = objectMapper;
     }
 
+    /**
+     * @return Returns Daraja API Access Token Response
+     */
     @Override
     public AccessTokenResponse getAccessToken() {
 

@@ -3,8 +3,11 @@ package com.codelens.darajaapi.utils;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.internal.Base64;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
+/**
+ * Contains a set of helper functions.
+ */
 @Slf4j
 public class HelperUtility {
 
@@ -13,12 +16,7 @@ public class HelperUtility {
      * @return returns base64String
      */
     public static String toBase64String(String value) {
-        try {
-            byte[] data = value.getBytes("ISO-8859-1");
-            return Base64.encode(data);
-        } catch (UnsupportedEncodingException e) {
-            log.error(String.format("UnsupportedEncodingException -> %s", e.getLocalizedMessage()));
-            return null;
-        }
+        byte[] data = value.getBytes(StandardCharsets.ISO_8859_1);
+        return Base64.encode(data);
     }
 }
