@@ -1,9 +1,6 @@
 package com.codelens.darajaapi.services;
 
-import com.codelens.darajaapi.dtos.AccessTokenResponse;
-import com.codelens.darajaapi.dtos.RegisterUrlResponse;
-import com.codelens.darajaapi.dtos.SimulateTransactionRequest;
-import com.codelens.darajaapi.dtos.SimulateTransactionResponse;
+import com.codelens.darajaapi.dtos.*;
 
 public interface DarajaApi {
 
@@ -16,4 +13,5 @@ public interface DarajaApi {
 
     SimulateTransactionResponse simulateC2BTransaction(SimulateTransactionRequest simulateTransactionRequest);
 
+    B2CTransactionSyncResponse performB2CTransaction(B2CTransactionRequest b2CTransactionRequest);
 }
