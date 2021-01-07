@@ -2,13 +2,18 @@ server:
   port: 8080
 mpesa:
   daraja:
-    consumer-key: GnAOnXaES6XNGKx0mCqiaUGzEjHFGuJ8
-    consumer-secret: HxeBGlCGgwpAUqNz
+    consumer-key: 1FFJ7qFqVc4ikded6FU9iYLb4lkWMXAp
+    consumer-secret: oOQpAmZyL7xueLj8
     grant-type: client_credentials
     oauth-endpoint: https://sandbox.safaricom.co.ke/oauth/v1/generate
     register-url-endpoint: https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl
     simulate-transaction-endpoint: https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate
-    shortCode: 603024
-    confirmationURL: https://96bb83ead560.ngrok.io/mobile-money/confirmation
-    validationURL: https://96bb83ead560.ngrok.io/mobile-money/validation
+    shortCode: 603021
+    confirmationURL: https://adf94cda8cd2.ngrok.io/mobile-money/confirmation
+    validationURL: https://adf94cda8cd2.ngrok.io/mobile-money/validation
     responseType: Completed
+    b2c-transaction-endpoint: https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest
+    b2c-result-url: https://adf94cda8cd2.ngrok.io/mobile-money/b2c-transaction-result
+    b2c-queue-timeout-url: https://adf94cda8cd2.ngrok.io/mobile-money/b2c-queue-timeout
+    b2c-initiator-name: apiop37
+    b2c-initiator-password: Safaricom3021#
