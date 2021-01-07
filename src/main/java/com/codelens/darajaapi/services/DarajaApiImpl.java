@@ -118,8 +118,16 @@ public class DarajaApiImpl implements DarajaApi {
     }
 
     @Override
-    public B2CTransactionSyncResponse performB2CTransaction(B2CTransactionRequest b2CTransactionRequest) {
+    public B2CTransactionSyncResponse performB2CTransaction(InternalB2CTransactionRequest internalB2CTransactionRequest) {
         AccessTokenResponse accessTokenResponse = getAccessToken();
+
+        B2CTransactionRequest b2CTransactionRequest = new B2CTransactionRequest();
+
+        b2CTransactionRequest.setCommandID(internalB2CTransactionRequest.getCommandID());
+        b2CTransactionRequest.setAmount(internalB2CTransactionRequest.getAmount());
+        b2CTransactionRequest.setPartyB(internalB2CTransactionRequest.getPartyB());
+        b2CTransactionRequest.setRemarks(internalB2CTransactionRequest.getRemarks());
+        b2CTransactionRequest.setOccassion(internalB2CTransactionRequest.getOccassion());
 
         // get the security credentials ...
         b2CTransactionRequest.setSecurityCredential(HelperUtility.getSecurityCredentials(mpesaConfiguration.getB2cInitiatorPassword()));
