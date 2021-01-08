@@ -13,5 +13,5 @@ public interface DarajaApi {
 
     SimulateTransactionResponse simulateC2BTransaction(SimulateTransactionRequest simulateTransactionRequest);
 
-    B2CTransactionSyncResponse performB2CTransaction(B2CTransactionRequest b2CTransactionRequest);
+    B2CTransactionSyncResponse performB2CTransaction(InternalB2CTransactionRequest internalB2CTransactionRequest);
 }
