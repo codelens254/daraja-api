@@ -172,13 +172,13 @@ public class DarajaApiImpl implements DarajaApi {
 
         transactionStatusRequest.setInitiator(mpesaConfiguration.getB2cInitiatorName());
         transactionStatusRequest.setSecurityCredential(HelperUtility.getSecurityCredentials(mpesaConfiguration.getB2cInitiatorPassword()));
-        transactionStatusRequest.setCommandID("TransactionStatusQuery");
+        transactionStatusRequest.setCommandID(TRANSACTION_STATUS_QUERY_COMMAND);
         transactionStatusRequest.setPartyA(mpesaConfiguration.getShortCode());
-        transactionStatusRequest.setIdentifierType("4");
+        transactionStatusRequest.setIdentifierType(SHORT_CODE_IDENTIFIER);
         transactionStatusRequest.setResultURL(mpesaConfiguration.getB2cResultUrl());
         transactionStatusRequest.setQueueTimeOutURL(mpesaConfiguration.getB2cQueueTimeoutUrl());
-        transactionStatusRequest.setRemarks("Transaction Status");
-        transactionStatusRequest.setOccasion("Transaction Status");
+        transactionStatusRequest.setRemarks(TRANSACTION_STATUS_VALUE);
+        transactionStatusRequest.setOccasion(TRANSACTION_STATUS_VALUE);
 
         AccessTokenResponse accessTokenResponse = getAccessToken();
 
@@ -191,9 +191,8 @@ public class DarajaApiImpl implements DarajaApi {
                 .addHeader(AUTHORIZATION_HEADER_STRING, String.format("%s %s", BEARER_AUTH_STRING, accessTokenResponse.getAccessToken()))
                 .build();
 
-        Response response = null;
         try {
-            response = okHttpClient.newCall(request).execute();
+            Response response = okHttpClient.newCall(request).execute();
             assert response.body() != null;
             // use Jackson to Decode the ResponseBody ...
 
