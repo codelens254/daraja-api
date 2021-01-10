@@ -95,6 +95,7 @@ public class DarajaApiImpl implements DarajaApi {
     @Override
     public SimulateTransactionResponse simulateC2BTransaction(SimulateTransactionRequest simulateTransactionRequest) {
         AccessTokenResponse accessTokenResponse = getAccessToken();
+        log.info(String.format("Access Token: %s", accessTokenResponse.getAccessToken()));
         RequestBody body = RequestBody.create(JSON_MEDIA_TYPE,
                 Objects.requireNonNull(HelperUtility.toJson(simulateTransactionRequest)));
 
@@ -120,6 +121,7 @@ public class DarajaApiImpl implements DarajaApi {
     @Override
     public B2CTransactionSyncResponse performB2CTransaction(InternalB2CTransactionRequest internalB2CTransactionRequest) {
         AccessTokenResponse accessTokenResponse = getAccessToken();
+        log.info(String.format("Access Token: %s", accessTokenResponse.getAccessToken()));
 
         B2CTransactionRequest b2CTransactionRequest = new B2CTransactionRequest();
 
@@ -131,6 +133,8 @@ public class DarajaApiImpl implements DarajaApi {
 
         // get the security credentials ...
         b2CTransactionRequest.setSecurityCredential(HelperUtility.getSecurityCredentials(mpesaConfiguration.getB2cInitiatorPassword()));
+
+        log.info(String.format("Security Creds: %s", b2CTransactionRequest.getSecurityCredential()));
 
         // set the result url ...
         b2CTransactionRequest.setResultURL(mpesaConfiguration.getB2cResultUrl());
