@@ -4,6 +4,7 @@ import com.codelens.darajaapi.dtos.*;
 import com.codelens.darajaapi.services.DarajaApi;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -72,4 +73,16 @@ public class MpesaController {
         return ResponseEntity.ok(darajaApi.checkAccountBalance());
     }
 
+    @PostMapping(path = "/stk-transaction-request", produces = "application/json")
+    public ResponseEntity<StkPushSyncResponse> performStkPushTransaction(@RequestBody InternalStkPushRequest internalStkPushRequest) {
+        return ResponseEntity.ok(darajaApi.performStkPushTransaction(internalStkPushRequest));
+    }
+
+    @SneakyThrows
+    @PostMapping(path = "/stk-transaction-result", produces = "application/json")
+    public ResponseEntity<AcknowledgeResponse> acknowledgeStkPushResponse(@RequestBody StkPushAsyncResponse stkPushAsyncResponse) {
+        log.info("======= STK Push Async Response =====");
+        log.info(objectMapper.writeValueAsString(stkPushAsyncResponse));
+        return ResponseEntity.ok(acknowledgeResponse);
+    }
 }

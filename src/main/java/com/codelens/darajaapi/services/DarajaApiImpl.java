@@ -242,4 +242,50 @@ public class DarajaApiImpl implements DarajaApi {
         }
 
     }
+
+    @Override
+    public StkPushSyncResponse performStkPushTransaction(InternalStkPushRequest internalStkPushRequest) {
+
+        ExternalStkPushRequest externalStkPushRequest = new ExternalStkPushRequest();
+        externalStkPushRequest.setBusinessShortCode(mpesaConfiguration.getStkPushShortCode());
+
+        String transactionTimestamp = HelperUtility.getTransactionTimestamp();
+        String stkPushPassword = HelperUtility.getStkPushPassword(mpesaConfiguration.getStkPushShortCode(),
+                mpesaConfiguration.getStkPassKey(), transactionTimestamp);
+
+        externalStkPushRequest.setPassword(stkPushPassword);
+        externalStkPushRequest.setTimestamp(transactionTimestamp);
+        externalStkPushRequest.setTransactionType(Constants.CUSTOMER_PAYBILL_ONLINE);
+        externalStkPushRequest.setAmount(internalStkPushRequest.getAmount());
+        externalStkPushRequest.setPartyA(internalStkPushRequest.getPhoneNumber());
+        externalStkPushRequest.setPartyB(mpesaConfiguration.getStkPushShortCode());
+        externalStkPushRequest.setPhoneNumber(internalStkPushRequest.getPhoneNumber());
+        externalStkPushRequest.setCallBackURL(mpesaConfiguration.getStkPushRequestCallbackUrl());
+        externalStkPushRequest.setAccountReference(HelperUtility.getTransactionUniqueNumber());
+        externalStkPushRequest.setTransactionDesc(String.format("%s Transaction", internalStkPushRequest.getPhoneNumber()));
+
+        AccessTokenResponse accessTokenResponse = getAccessToken();
+
+        RequestBody body = RequestBody.create(JSON_MEDIA_TYPE,
+                Objects.requireNonNull(HelperUtility.toJson(externalStkPushRequest)));
+
+        Request request = new Request.Builder()
+                .url(mpesaConfiguration.getStkPushRequestUrl())
+                .post(body)
+                .addHeader(AUTHORIZATION_HEADER_STRING, String.format("%s %s", BEARER_AUTH_STRING, accessTokenResponse.getAccessToken()))
+                .build();
+
+
+        try {
+            Response response = okHttpClient.newCall(request).execute();
+            assert response.body() != null;
+            // use Jackson to Decode the ResponseBody ...
+
+            return objectMapper.readValue(response.body().string(), StkPushSyncResponse.class);
+        } catch (IOException e) {
+            log.error(String.format("Could not perform the STK push request -> %s", e.getLocalizedMessage()));
+            return null;
+        }
+
+    }
 }

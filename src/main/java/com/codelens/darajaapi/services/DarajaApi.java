@@ -18,4 +18,6 @@ public interface DarajaApi {
     TransactionStatusSyncResponse getTransactionResult(InternalTransactionStatusRequest internalTransactionStatusRequest);
 
     CommonSyncResponse checkAccountBalance();
+
+    StkPushSyncResponse performStkPushTransaction(InternalStkPushRequest internalStkPushRequest);
 }
