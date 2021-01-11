@@ -26,6 +26,10 @@ public class MpesaConfiguration {
     private String b2cInitiatorPassword;
     private String transactionResultUrl;
     private String checkAccountBalanceUrl;
+    private String stkPassKey;
+    private String stkPushShortCode;
+    private String stkPushRequestUrl;
+    private String stkPushRequestCallbackUrl;
 
     @Override
     public String toString() {
