@@ -11,6 +11,7 @@ public class Constants {
     public static MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
 
     public static final String TRANSACTION_STATUS_QUERY_COMMAND = "TransactionStatusQuery";
+    public static final String ACCOUNT_BALANCE_COMMAND = "AccountBalance";
     public static final String TRANSACTION_STATUS_VALUE = "Transaction Status";
 
     public static final String MSISDN_IDENTIFIER = "1";

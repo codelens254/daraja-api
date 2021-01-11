@@ -18,3 +18,4 @@ mpesa:
     b2c-initiator-name: apiop37
     b2c-initiator-password: Safaricom3021#
     transactionResultUrl: https://sandbox.safaricom.co.ke/mpesa/transactionstatus/v1/query
+    checkAccountBalanceUrl: https://sandbox.safaricom.co.ke/mpesa/accountbalance/v1/query

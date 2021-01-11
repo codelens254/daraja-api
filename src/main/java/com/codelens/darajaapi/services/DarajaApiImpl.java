@@ -2,6 +2,7 @@ package com.codelens.darajaapi.services;
 
 import com.codelens.darajaapi.config.MpesaConfiguration;
 import com.codelens.darajaapi.dtos.*;
+import com.codelens.darajaapi.utils.Constants;
 import com.codelens.darajaapi.utils.HelperUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -119,7 +120,7 @@ public class DarajaApiImpl implements DarajaApi {
     }
 
     @Override
-    public B2CTransactionSyncResponse performB2CTransaction(InternalB2CTransactionRequest internalB2CTransactionRequest) {
+    public CommonSyncResponse performB2CTransaction(InternalB2CTransactionRequest internalB2CTransactionRequest) {
         AccessTokenResponse accessTokenResponse = getAccessToken();
         log.info(String.format("Access Token: %s", accessTokenResponse.getAccessToken()));
 
@@ -156,7 +157,7 @@ public class DarajaApiImpl implements DarajaApi {
 
             assert response.body() != null;
 
-            return objectMapper.readValue(response.body().string(), B2CTransactionSyncResponse.class);
+            return objectMapper.readValue(response.body().string(), CommonSyncResponse.class);
         } catch (IOException e) {
             log.error(String.format("Could not perform B2C transaction ->%s", e.getLocalizedMessage()));
             return null;
@@ -202,6 +203,43 @@ public class DarajaApiImpl implements DarajaApi {
             return null;
         }
 
+
+    }
+
+    @Override
+    public CommonSyncResponse checkAccountBalance() {
+
+        CheckAccountBalanceRequest checkAccountBalanceRequest = new CheckAccountBalanceRequest();
+        checkAccountBalanceRequest.setInitiator(mpesaConfiguration.getB2cInitiatorName());
+        checkAccountBalanceRequest.setSecurityCredential(HelperUtility.getSecurityCredentials(mpesaConfiguration.getB2cInitiatorPassword()));
+        checkAccountBalanceRequest.setCommandID(Constants.ACCOUNT_BALANCE_COMMAND);
+        checkAccountBalanceRequest.setPartyA(mpesaConfiguration.getShortCode());
+        checkAccountBalanceRequest.setIdentifierType(Constants.SHORT_CODE_IDENTIFIER);
+        checkAccountBalanceRequest.setRemarks("Check Account Balance");
+        checkAccountBalanceRequest.setQueueTimeOutURL(mpesaConfiguration.getB2cQueueTimeoutUrl());
+        checkAccountBalanceRequest.setResultURL(mpesaConfiguration.getB2cResultUrl());
+
+        AccessTokenResponse accessTokenResponse = getAccessToken();
+
+        RequestBody body = RequestBody.create(JSON_MEDIA_TYPE,
+                Objects.requireNonNull(HelperUtility.toJson(checkAccountBalanceRequest)));
+
+        Request request = new Request.Builder()
+                .url(mpesaConfiguration.getCheckAccountBalanceUrl())
+                .post(body)
+                .addHeader(AUTHORIZATION_HEADER_STRING, String.format("%s %s", BEARER_AUTH_STRING, accessTokenResponse.getAccessToken()))
+                .build();
+
+        try {
+            Response response = okHttpClient.newCall(request).execute();
+            assert response.body() != null;
+            // use Jackson to Decode the ResponseBody ...
+
+            return objectMapper.readValue(response.body().string(), CommonSyncResponse.class);
+        } catch (IOException e) {
+            log.error(String.format("Could not fetch the account balance -> %s", e.getLocalizedMessage()));
+            return null;
+        }
 
     }
 }

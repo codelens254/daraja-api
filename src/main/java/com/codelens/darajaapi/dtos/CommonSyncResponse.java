@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class B2CTransactionSyncResponse{
+public class CommonSyncResponse {
 
 	@JsonProperty("ConversationID")
 	private String conversationID;
