@@ -25,6 +25,7 @@ public class MpesaConfiguration {
     private String b2cInitiatorName;
     private String b2cInitiatorPassword;
     private String transactionResultUrl;
+    private String checkAccountBalanceUrl;
 
     @Override
     public String toString() {
