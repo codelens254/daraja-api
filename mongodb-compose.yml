@@ -1,0 +1,20 @@
+version: "3.5"
+
+services:
+  mongo:
+    image: mongo:4
+    container_name: daraja-mongo
+    ports:
+      - 27080:27017
+    networks:
+      - daraja
+    volumes:
+      - mongo:/data/db
+
+networks:
+  daraja:
+    name: daraja-network
+
+volumes:
+  mongo:
+    driver: local

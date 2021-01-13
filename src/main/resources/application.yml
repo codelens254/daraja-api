@@ -24,3 +24,10 @@ mpesa:
     stkPushRequestUrl: https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest
     stkPushRequestCallbackUrl: https://adf94cda8cd2.ngrok.io/mobile-money/stk-transaction-result
     lnmQueryRequestUrl: https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27080
+      database: daraja-db
