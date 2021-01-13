@@ -85,4 +85,10 @@ public class MpesaController {
         log.info(objectMapper.writeValueAsString(stkPushAsyncResponse));
         return ResponseEntity.ok(acknowledgeResponse);
     }
+
+    @PostMapping(path = "/query-lnm-request", produces = "application/json")
+    public ResponseEntity<LNMQueryResponse> getTransactionStatus(@RequestBody InternalLNMRequest internalLNMRequest) {
+        return ResponseEntity.ok(darajaApi.getTransactionStatus(internalLNMRequest));
+    }
+
 }
