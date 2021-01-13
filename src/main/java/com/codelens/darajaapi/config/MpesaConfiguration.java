@@ -30,6 +30,7 @@ public class MpesaConfiguration {
     private String stkPushShortCode;
     private String stkPushRequestUrl;
     private String stkPushRequestCallbackUrl;
+    private String lnmQueryRequestUrl;
 
     @Override
     public String toString() {

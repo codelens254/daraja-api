@@ -20,4 +20,6 @@ public interface DarajaApi {
     CommonSyncResponse checkAccountBalance();
 
     StkPushSyncResponse performStkPushTransaction(InternalStkPushRequest internalStkPushRequest);
+
+    LNMQueryResponse getTransactionStatus(InternalLNMRequest internalLNMRequest);
 }

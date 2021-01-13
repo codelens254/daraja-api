@@ -288,4 +288,41 @@ public class DarajaApiImpl implements DarajaApi {
         }
 
     }
+
+    @Override
+    public LNMQueryResponse getTransactionStatus(InternalLNMRequest internalLNMRequest) {
+
+        ExternalLNMQueryRequest externalLNMQueryRequest = new ExternalLNMQueryRequest();
+        externalLNMQueryRequest.setBusinessShortCode(mpesaConfiguration.getStkPushShortCode());
+
+        String requestTimestamp = HelperUtility.getTransactionTimestamp();
+        String stkPushPassword = HelperUtility.getStkPushPassword(mpesaConfiguration.getStkPushShortCode(),
+                mpesaConfiguration.getStkPassKey(), requestTimestamp);
+
+        externalLNMQueryRequest.setPassword(stkPushPassword);
+        externalLNMQueryRequest.setTimestamp(requestTimestamp);
+        externalLNMQueryRequest.setCheckoutRequestID(internalLNMRequest.getCheckoutRequestID());
+
+        AccessTokenResponse accessTokenResponse = getAccessToken();
+
+        RequestBody body = RequestBody.create(JSON_MEDIA_TYPE,
+                Objects.requireNonNull(HelperUtility.toJson(externalLNMQueryRequest)));
+
+        Request request = new Request.Builder()
+                .url(mpesaConfiguration.getLnmQueryRequestUrl())
+                .post(body)
+                .addHeader(AUTHORIZATION_HEADER_STRING, String.format("%s %s", BEARER_AUTH_STRING, accessTokenResponse.getAccessToken()))
+                .build();
+
+        try {
+            Response response = okHttpClient.newCall(request).execute();
+            assert response.body() != null;
+            // use Jackson to Deserialising the ResponseBody ...
+            return objectMapper.readValue(response.body().string(), LNMQueryResponse.class);
+        } catch (IOException e) {
+            log.error(String.format("Could not get the transaction status -> %s", e.getLocalizedMessage()));
+            return null;
+        }
+
+    }
 }
