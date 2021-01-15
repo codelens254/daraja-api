@@ -19,9 +19,11 @@ public class B2C_C2B_Entries {
     @Indexed(unique = true)
     private String transactionId;
 
+    private String billRefNumber;
+
     private String msisdn;
 
-    private Long amount;
+    private String amount;
 
     @Indexed(unique = true)
     private String conversationId;
@@ -33,5 +35,5 @@ public class B2C_C2B_Entries {
 
     private String resultCode;
 
-    private String rawCallbackPayloadResponse;
+    private Object rawCallbackPayloadResponse;
 }
