@@ -10,4 +10,7 @@ public interface B2CC2BEntriesRepository extends MongoRepository<B2C_C2B_Entries
 
     // Find Transaction By TransactionId ....
     B2C_C2B_Entries findByTransactionId(String transactionId);
+
+    B2C_C2B_Entries findByBillRefNumber(String billRefNumber);
+
 }
