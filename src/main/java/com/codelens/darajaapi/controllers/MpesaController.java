@@ -1,6 +1,7 @@
 package com.codelens.darajaapi.controllers;
 
 import com.codelens.darajaapi.dtos.*;
+import com.codelens.darajaapi.repository.StkPushEntriesRepository;
 import com.codelens.darajaapi.services.DarajaApi;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,10 +19,13 @@ public class MpesaController {
     private final AcknowledgeResponse acknowledgeResponse;
     private final ObjectMapper objectMapper;
 
-    public MpesaController(DarajaApi darajaApi, AcknowledgeResponse acknowledgeResponse, ObjectMapper objectMapper) {
+    private final StkPushEntriesRepository stkPushEntriesRepository;
+
+    public MpesaController(DarajaApi darajaApi, AcknowledgeResponse acknowledgeResponse, ObjectMapper objectMapper, StkPushEntriesRepository stkPushEntriesRepository) {
         this.darajaApi = darajaApi;
         this.acknowledgeResponse = acknowledgeResponse;
         this.objectMapper = objectMapper;
+        this.stkPushEntriesRepository = stkPushEntriesRepository;
     }
 
     @GetMapping(path = "/token", produces = "application/json")
@@ -90,5 +94,4 @@ public class MpesaController {
     public ResponseEntity<LNMQueryResponse> getTransactionStatus(@RequestBody InternalLNMRequest internalLNMRequest) {
         return ResponseEntity.ok(darajaApi.getTransactionStatus(internalLNMRequest));
     }
-
 }
